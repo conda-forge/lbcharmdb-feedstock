@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/lbcharmdb-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/lbcharmdb-{{ version }}.tar.gz
   sha256: 99b330c91dded3b6eb21fbcba1fa49ad419c1158665a2e9f77daebe56418c1ff
 
 build:
@@ -14,16 +14,16 @@ build:
     - lbcharmdb-compute-correlation = lbcharmdb.calculate_correlations_weighted_tuples:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.8
+    - python {{ python_min }}
     - setuptools >=61.2
     - setuptools-scm
     - pip
   run:
-    - python >=3.8
+    - python >={{ python_min }}
     - tqdm
     - root_base
     - numpy
@@ -37,6 +37,7 @@ test:
     - lbcharmdb-compute-correlation --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://gitlab.cern.ch/lhcb-charm/correlations-database-editor
